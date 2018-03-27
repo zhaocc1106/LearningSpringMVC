@@ -29,5 +29,23 @@
 		<property name="cacheSeconds" value="5"/>
 	</bean>
 
+	<!-- ServletForwardingController -->	
+	<bean name="/forwardToServlet" class="org.springframework.web.servlet.mvc.ServletForwardingController">
+		<property name="servletName" value="forwarding"/>
+	</bean>
+
 	<mvc:resources location="/html" mapping="/html/**"/>
+	
+	<!-- AbstractCommandController -->
+	<bean name="/abstractCommand" class="com.baidu.zhaocc.web.controller.MyAbstractCommandController">
+		<property name="commandClass" value="com.baidu.zhaocc.module.UserModule"/>
+	</bean>
+	
+	<!-- SimpleFormController -->
+	<bean name="/simpleForm" class="com.baidu.zhaocc.web.controller.MySimpleFormController">
+		<property name="formView" value="myFormView"/>
+		<property name="successView" value="redirect:/success"/>
+	</bean>
+	
+	<bean name="/success" class="com.baidu.zhaocc.web.controller.HelloWorldController"/>
 </beans>
