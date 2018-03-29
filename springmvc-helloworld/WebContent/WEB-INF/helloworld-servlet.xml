@@ -22,7 +22,7 @@
 		<property name="suffix" value=".jsp"></property>
 	</bean>
 	
-	<!-- Controller -->
+	<!-- Hello World Controller -->
 	<bean name="/hello" class="com.baidu.zhaocc.web.controller.HelloWorldController">
 		<property name="supportedMethods" value="POST,GET"/>
 		<property name="requireSession" value="false"/>
@@ -47,5 +47,24 @@
 		<property name="successView" value="redirect:/success"/>
 	</bean>
 	
+	<!-- canCancelFormController -->
+	<bean name="/canCancelFormView" class="com.baidu.zhaocc.web.controller.canCancelFormController">
+		<property name="formView" value="canCancelFormView"></property>
+		<property name="successView" value="redirect:/success"></property>
+		<property name="cancelView" value="redirect:/cancel"></property>
+	</bean>
+	
 	<bean name="/success" class="com.baidu.zhaocc.web.controller.HelloWorldController"/>
+	<bean name="/cancel" class="com.baidu.zhaocc.web.controller.CancelController"/>
+	
+	<!-- InfoFillWizardFormController -->
+	<bean name="/infoFillWizardForm" class="com.baidu.zhaocc.web.controller.InfoFillWizardFormController">
+		<property name="pages">
+			<list>
+				<value>wizard/baseInfo</value>
+				<value>wizard/schoolInfo</value>
+				<value>wizard/workInfo</value>
+			</list>
+		</property>
+	</bean>
 </beans>
