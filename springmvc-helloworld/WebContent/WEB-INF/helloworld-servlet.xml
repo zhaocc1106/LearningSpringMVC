@@ -8,6 +8,7 @@
         http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
         
     <mvc:annotation-driven/>
+    <mvc:resources location="/html/" mapping="/html/**"/>
     
 	<!-- HandlerMapping -->
 	<bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/>
@@ -34,7 +35,6 @@
 		<property name="servletName" value="forwarding"/>
 	</bean>
 
-	<mvc:resources location="/html" mapping="/html/**"/>
 	
 	<!-- AbstractCommandController -->
 	<bean name="/abstractCommand" class="com.baidu.zhaocc.web.controller.MyAbstractCommandController">
@@ -66,5 +66,15 @@
 				<value>wizard/workInfo</value>
 			</list>
 		</property>
+	</bean>
+	
+	<!-- ParameterizableViewController -->
+	<bean name="/parameterizableView" class="org.springframework.web.servlet.mvc.ParameterizableViewController">
+		<property name="viewName" value="parameterizableView"></property>
+	</bean>
+	
+	<!-- UrlFilenameViewController -->
+	<bean name="/index/*" class="org.springframework.web.servlet.mvc.UrlFilenameViewController">
+		<property name="prefix" value="index/"></property>
 	</bean>
 </beans>
