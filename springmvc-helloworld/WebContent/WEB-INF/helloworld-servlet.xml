@@ -142,7 +142,22 @@
 				<prop key="dolist">list</prop>
 			</props>
 		</property>
-		<!--4、默认执行的功能处理方法-->
+		<!--4、默认执行的功能处理方法 -->
 		<property name="defaultMethodName" value="list" />
+	</bean>
+
+	<!-- dataBindAndValidata -->
+	<bean name="/dataBind"
+		class="com.baidu.zhaocc.web.controller.DataBindTestController"></bean>
+
+	<!-- errorController -->
+	<bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basename" value="classpath:messages"></property>
+		<property name="fileEncodings" value="utf-8"></property>
+		<property name="cacheSeconds" value="120"></property>	
+	</bean>
+	<bean name="/errorController"
+		class="com.baidu.zhaocc.web.controller.ErrorController">
 	</bean>
 </beans>
