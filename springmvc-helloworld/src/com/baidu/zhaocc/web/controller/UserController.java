@@ -3,6 +3,8 @@ package com.baidu.zhaocc.web.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.util.StringUtils;
+import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
@@ -65,13 +67,20 @@ public class UserController extends MultiActionController {
 		this.updateView = updateView;
 	}
 
-	public String create(HttpServletRequest request,
+	public ModelAndView create(HttpServletRequest request,
 			HttpServletResponse response, UserModule userModel) {
 		if ("GET".equals(request.getMethod())) {
-			return getCreateView();
+			return new ModelAndView(getCreateView());
+		}
+		BindException errors = new BindException(userModel, getCommandName(userModel));
+		if (!StringUtils.hasLength(userModel.getUserName())) {
+			errors.rejectValue("userName", "username.not.empty");
+		}
+		if (errors.hasErrors()) {
+			return new ModelAndView(getCreateView()).addAllObjects(errors.getModel());
 		}
 		userService.create(userModel);
-		return getRedirectToListView();
+		return new ModelAndView(getRedirectToListView());
 	}
 
 	public ModelAndView list(HttpServletRequest request,

@@ -155,9 +155,25 @@
 		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
 		<property name="basename" value="classpath:messages"></property>
 		<property name="fileEncodings" value="utf-8"></property>
-		<property name="cacheSeconds" value="120"></property>	
+		<property name="cacheSeconds" value="120"></property>
 	</bean>
-	<bean name="/errorController"
-		class="com.baidu.zhaocc.web.controller.ErrorController">
+	<bean name="/errorController" class="com.baidu.zhaocc.web.controller.ErrorController">
+	</bean>
+
+	<!-- dataBinderErrorTest -->
+	<bean name="/dataBinderError"
+		class="com.baidu.zhaocc.web.controller.DataBinderErrorTestController">
+		<property name="formView" value="bindAndValidate/inputView"></property>
+		<property name="successView" value="bindAndValidate/success"></property>
+	</bean>
+
+	<!-- validator test -->
+	<bean id="userModelValidator"
+		class="com.baidu.zhaocc.web.controller.support.validator.UserModelValidator" />
+	<bean name="/validator"
+		class="com.baidu.zhaocc.web.controller.ValidatorTestController">
+		<property name="formView" value="bindAndValidate/registerAndValidator" />
+		<property name="successView" value="redirect:/success" />
+		<property name="validator" ref="userModelValidator" />
 	</bean>
 </beans>
