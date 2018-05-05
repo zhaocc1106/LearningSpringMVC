@@ -8,11 +8,16 @@
 
 	<!-- begin spring3.1 handler mapping -->
 	<bean
-		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"></bean>
+		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
+	</bean>
 
 	<!-- begin spring3.1 handler adapter -->
 	<bean
-		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"></bean>
+		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+		<property name="webBindingInitializer">
+			<bean class="com.baidu.zhaocc.support.initializer.MyWebBindingIntializer"></bean>
+		</property>	
+	</bean>
 
 	<!-- ViewResolver -->
 	<bean
@@ -25,4 +30,45 @@
 
 	<!-- first annotation controller -->
 	<bean class="com.baidu.zhaocc.web.controller.HelloController"></bean>
+
+	<!-- path variable test controller -->
+	<bean class="com.baidu.zhaocc.web.controller.pathVariableTestController"></bean>
+
+	<!-- request content type controller -->
+	<bean
+		class="com.baidu.zhaocc.web.controller.consumesproduces.contenttype.RequestContentTypeController"></bean>
+
+	<!-- response content type controller -->
+	<bean
+		class="com.baidu.zhaocc.web.controller.consumesproduces.contenttype.ResponseContentTypeController"></bean>
+
+	<!-- request content type controller -->
+	<bean
+		class="com.baidu.zhaocc.web.controller.consumesproduces.RequestContentTypeController"></bean>
+
+	<!-- response content type controller -->
+	<bean
+		class="com.baidu.zhaocc.web.controller.consumesproduces.ResponseContentTypeController"></bean>
+
+	<!-- request param test controller -->
+	<bean
+		class="com.baidu.zhaocc.web.controller.RequestParamController"></bean>
+
+	<!-- wizard controller -->
+	<bean
+		class="com.baidu.zhaocc.web.controller.WizardController">
+		<property name="pageViews">
+			<list>
+			<value>wizard/baseInfo</value>
+			<value>wizard/schoolInfo</value>
+			<value>wizard/workInfo</value>
+			</list>
+		</property>
+		<property name="successView" value="redirect:/success"></property>
+		<property name="failView" value="redirect:/cancel"></property>
+	</bean>
+
+	<!-- data binder test controller -->
+	<bean
+		class="com.baidu.zhaocc.web.controller.DataBindTestController"></bean>
 </beans>
