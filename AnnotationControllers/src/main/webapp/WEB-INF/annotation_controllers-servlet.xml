@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc 
+        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+
+	<!-- Formatting conversion service factory -->
+	<bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+ 	    <property name="converters">
+ 	       <list>
+	 	        <bean class="com.baidu.zhaocc.support.converter.PhoneNumberToStringConverter"/>
+	 	        <bean class="com.baidu.zhaocc.support.converter.StringToPhoneNumberConverter"/>
+	 	        <bean class="com.baidu.zhaocc.support.converter.StringToDateConverter">
+	 	            <constructor-arg value="yyyy-MM-dd"/>
+	 	        </bean>
+ 	        </list>
+ 	    </property>
+ 	    <property name="formatters">
+ 	        <list>
+ 	            <bean class="com.baidu.zhaocc.support.formatter.PhoneNumberFormatAnnotationFormatterFactory"/>
+ 	        </list>
+ 	    </property>
+ 	</bean>
+ 
+ 	<!-- web binding initialize  -->
+	<bean id="webBindingInitializer"
+		class="org.springframework.web.bind.support.ConfigurableWebBindingInitializer">
+		<property name="conversionService" ref="conversionService"/>
+	</bean>
+
+	<!-- begin spring3.1 handler mapping -->
+	<bean
+		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
+		<property name="interceptors">
+            <list>
+                <bean class="org.springframework.web.servlet.handler.ConversionServiceExposingInterceptor">
+                    <constructor-arg ref="conversionService"/>
+                </bean>
+            </list>
+        </property>
+	</bean>
+
+	<!-- begin spring3.1 handler adapter -->
+	<bean
+		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+		<property name="webBindingInitializer" ref="webBindingInitializer">
+			<!-- bean class="com.baidu.zhaocc.support.initializer.MyWebBindingIntializer"></bean -->
+		</property>	
+	</bean>
+
+	<!-- ViewResolver -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView"></property>
+		<property name="prefix" value="/WEB-INF/jsp/"></property>
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+
+	<!-- first annotation controller -->
+	<bean class="com.baidu.zhaocc.web.controller.HelloController"></bean>
+
+	<!-- path variable test controller -->
+	<bean class="com.baidu.zhaocc.web.controller.pathVariableTestController"></bean>
+
+	<!-- request content type controller -->
+	<bean
+		class="com.baidu.zhaocc.web.controller.consumesproduces.contenttype.RequestContentTypeController"></bean>
+
+	<!-- response content type controller -->
+	<bean
+		class="com.baidu.zhaocc.web.controller.consumesproduces.contenttype.ResponseContentTypeController"></bean>
+
+	<!-- request content type controller -->
+	<bean
+		class="com.baidu.zhaocc.web.controller.consumesproduces.RequestContentTypeController"></bean>
+
+	<!-- response content type controller -->
+	<bean
+		class="com.baidu.zhaocc.web.controller.consumesproduces.ResponseContentTypeController"></bean>
+
+	<!-- request param test controller -->
+	<bean
+		class="com.baidu.zhaocc.web.controller.RequestParamController"></bean>
+
+	<!-- wizard controller -->
+	<bean
+		class="com.baidu.zhaocc.web.controller.WizardController">
+		<property name="pageViews">
+			<list>
+			<value>wizard/baseInfo</value>
+			<value>wizard/schoolInfo</value>
+			<value>wizard/workInfo</value>
+			</list>
+		</property>
+		<property name="successView" value="redirect:/success"></property>
+		<property name="failView" value="redirect:/cancel"></property>
+	</bean>
+
+	<!-- data binder test controller -->
+	<bean
+		class="com.baidu.zhaocc.web.controller.DataBindTestController"></bean>
+
+	<!-- formatter controller -->
+	<bean
+		class="com.baidu.zhaocc.web.controller.FormatterTestController"></bean>
+		
+</beans>
