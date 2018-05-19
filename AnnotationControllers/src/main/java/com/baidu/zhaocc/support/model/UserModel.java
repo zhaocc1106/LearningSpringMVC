@@ -1,7 +1,10 @@
 package com.baidu.zhaocc.support.model;
 
+import javax.validation.constraints.NotNull;
+
 public class UserModel {
 
+	@NotNull
 	private String username;
 	private String pwd;
 	private SchoolInfoModel schoolInfo;

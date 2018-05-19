@@ -24,10 +24,24 @@
  	    </property>
  	</bean>
  
+	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basename" value="classpath:messages"/>
+        <property name="fileEncodings" value="utf-8"/>
+        <property name="cacheSeconds" value="120"/>
+    </bean>
+
+	<!-- 以下 validator  ConversionService 在使用 mvc:annotation-driven 会 自动注册-->
+    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+        <property name="providerClass"  value="org.hibernate.validator.HibernateValidator"/>
+        <!-- 如果不加默认到 使用classpath下的 ValidationMessages.properties -->
+        <property name="validationMessageSource" ref="messageSource"/>
+    </bean>
+
  	<!-- web binding initialize  -->
 	<bean id="webBindingInitializer"
 		class="org.springframework.web.bind.support.ConfigurableWebBindingInitializer">
 		<property name="conversionService" ref="conversionService"/>
+		<property name="validator" ref="validator"></property>
 	</bean>
 
 	<!-- begin spring3.1 handler mapping -->
@@ -106,5 +120,12 @@
 	<!-- formatter controller -->
 	<bean
 		class="com.baidu.zhaocc.web.controller.FormatterTestController"></bean>
-		
+
+	<!-- register validator controller -->
+	<bean
+		class="com.baidu.zhaocc.web.controller.RegisterSimpleFormController"></bean>
+
+	<!-- JSR303验证框架验证 controller -->
+	<bean
+		class="com.baidu.zhaocc.web.controller.Validate1Controller"></bean>
 </beans>
