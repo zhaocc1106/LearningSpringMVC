@@ -128,4 +128,8 @@
 	<!-- JSR303验证框架验证 controller -->
 	<bean
 		class="com.baidu.zhaocc.web.controller.Validate1Controller"></bean>
+		
+	<!-- Hibernate test Controller -->
+	<bean
+		class="com.baidu.zhaocc.web.controller.UserInfoRegisterController"></bean>
 </beans>
